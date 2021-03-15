@@ -10,11 +10,14 @@
     <title>Random Color Palette Generator</title>
 </head>
 <body>
-    <h1>Random Color Palette Generator</h1>
-    <button class="btn" onclick="addColor();">Refresh</button>
+    <div id="top-div">
+        <h1>Random Color Palette Generator</h1>
+        <button class="btn" onclick="addColor();">Refresh</button>
+    </div>
+
     <section class="container"></section>
     
-    <script>  
+    <script>
         for(let i=1; i<=100; i++){
             const box = document.createElement('div');
             box.classList.add('box');

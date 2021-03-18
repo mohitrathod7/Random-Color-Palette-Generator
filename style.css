@@ -2,7 +2,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: consolas;
+    font-family: sans-serif;
+}
+
+:root{
+    --top-div-height: 150px;
+    --bg-black: black;
+}
+
+::-webkit-scrollbar{
+    display: none;
 }
 
 h1{
@@ -12,66 +21,102 @@ h1{
 
 .btn{
     background: none;
-    color: #111;
+    color: white;
     padding: 15px 60px;
     font-size: 20px;
     margin: 20px auto;
     max-width: 200px;
     outline: none;
     display: block;
-    border: 2px solid black;
+    border: 2px solid white;
     border-radius: 20px;
     cursor: pointer;
 }
 
 .btn:hover{
-    background: #dfdfdf;
+    color: black;
+    background: white;
 }
 
 #top-div{
     padding: 5px 10px;
     position: fixed;
     width: -webkit-fill-available;
-    background: white;
+    background: var(--bg-black);
+    color: white;
+    z-index: 10;
 }
 
 .container{
-    padding-top: 150px;
-    display: block;
+    display: none;
+    padding-top: calc(var(--top-div-height) + 2px);
+    padding-left: 10px;
+    padding-right: 10px;
+    background: var(--bg-black);
     column-count: 5;
     column-gap: 0;
 }
 
 .box{
+    padding: 10px 0;
     height: 150px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    background: white;
-    border: 2px solid white;
-    color: white;
-    font-size: 24px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    background: var(--bg-black);
+    border: 2px solid var(--bg-black);
+    border-radius: 10px;
+    -webkit-text-stroke: 1px black;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     transition: 0.4s all ease-in-out;
+}
+
+.box .fa{
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.fa-lock:before{
+    color: red;
+}
+
+.box i span{
+    margin-left: 10px;
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.box p{
+    font-size: 24px;
+    font-weight: 900;
+    color: white;
 }
 
 @media only screen and (max-width: 750px){
     .container{
         column-count: 4;
-        column-gap: 0;
     }
 }
 
 @media only screen and (max-width: 450px){
     .container{
         column-count: 2;
-        column-gap: 0;
     }
 }
 
 @media only screen and (max-width: 360px){
+    h1{
+        margin: 9px 0;
+    }
+
+    .btn{
+        margin: 5px auto;
+        padding: 8.25px 40px;
+        border-radius: 15px;
+    }
+
     .container{
         column-count: 1;
-        column-gap: 0;
     }
 }

@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 
     <title>Random Color Palette Generator</title>
@@ -15,17 +16,53 @@
         <button class="btn" onclick="addColor();">Refresh</button>
     </div>
 
-    <section class="container"></section>
-    
+    <!-- Create section.container -->
     <script>
-        for(let i=1; i<=100; i++){
-            const box = document.createElement('div');
-            box.classList.add('box');
-            document.querySelector('.container').appendChild(box);
-        }
+        document.write('<section class="container">');
+            for(let i=1; i<=40; i++){
+                var id = String(i);
+                document.write('<div class="box unlocked" id="_' + id + '"><i class="fa fa-unlock-alt" onclick=lock("_' + id + '");></i><p></p></div>');
+            }
+        document.write('</section>');
+    </script>
 
+    <!-- Onclick "REFRESH" button make section.container visible -->
+    <script>
+        $(".btn").click(function(){
+            $(".container").css("display", "block");
+        });
+    </script>
+
+    <!-- lock the clicked div -->
+    <script>
+        function lock(clicked_id){
+            // Change class of clicked id.
+            var clicked_div = document.getElementById(clicked_id);
+            if(clicked_div.className == "box unlocked"){
+                clicked_div.className = "box locked";
+            }
+            else{
+                clicked_div.className = "box unlocked";
+            }
+
+            // Get class of <i> of clicked id and change class of it.
+            var i_tag = clicked_div.firstElementChild;
+            var locked = "fa fa-lock";
+            var unlocked = "fa fa-unlock-alt"
+            if (i_tag.className == locked){
+                i_tag.className = unlocked;
+                
+            }
+            else if (i_tag.className == unlocked){
+                i_tag.className = locked;
+            }
+        }
+    </script>
+
+    <!-- Change color of unlocked divs -->
+    <script>
         const btn = document.querySelector('.btn');
-        const randomColorBlock = document.querySelectorAll('.box');
+        const randomColorBlock = document.querySelectorAll('.notlocked');
 
         function RandomHexColorCode(){
             var chars = "0123456789abcdef";
@@ -41,11 +78,29 @@
         }
 
         function addColor(){
-            randomColorBlock.forEach(e =>{
-                var newColor = RandomHexColorCode();
-                e.style.backgroundColor = newColor;
-                e.innerHTML = newColor;
-            })
+            // getting list of all colors
+            var color_list = document.getElementsByClassName('box');
+            
+            // getting list of all previous colors
+            var previousColors = [];
+            for (var color = 0; color < color_list.length; color++) {
+                previousColors.push(color_list[color].getElementsByTagName('p')[0].textContent);
+            }
+
+            // Execution
+            for (var color = 0; color < color_list.length; color++) {
+                if (color_list[color].className == "box unlocked"){
+                    var newColor = RandomHexColorCode();
+                    color_list[color].style.backgroundColor = newColor;
+                    color_list[color].innerHTML = '<i class="fa fa-unlock-alt" onclick=lock("_' + (parseInt(color)+1) + '");></i><p>' + String(newColor) + '</p>';
+                }
+                else if (color_list[color].className == "box locked"){
+                    color_list[color].innerHTML = '<i class="fa fa-lock" onclick=lock("_' + (parseInt(color)+1) + '");></i><p>' + String(previousColors[color]) + '</p>';
+                }
+            }
+
+            // Empty list to get new  current color
+            previousColors = [];
         }
     </script>
 </body>
